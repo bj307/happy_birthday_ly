@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+  <link rel="stylesheet" href="confete.css">
+  <script>
+    $(document).ready(() => {
+
+      setTimeout(() => {
+
+      }, 10000)
+    })
+  </script>
+  <style>
+    body {
+      background-color: #fdfdaf;
+      width: 100%;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-10px);
+      }
+
+      50% {
+        transform: translateX(10px);
+      }
+
+      75% {
+        transform: translateX(-10px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .shake {
+      display: inline-block;
+      animation: shake 0.5s ease-in-out infinite;
+    }
+
+    .full {
+
+      height: 100vh;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .presente1,
+    .presente2 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 12px;
+
+      img {
+        width: 380px;
+      }
+    }
+
+    #me {
+      position: absolute;
+      top: 30%;
+      width: 10px;
+    }
+
+    @keyframes grow {
+      0% {
+        width: 0px;
+        height: 0px;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+    .grow {
+      animation: grow 2s forwards;
+    }
+
+    .happy1 {
+      position: absolute;
+      top: 0px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .happy2 {
+      position: absolute;
+      bottom: 0px;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body style="margin: unset;">
+  <iframe id="player" width="100" height="100" style="position: absolute; opacity: 0;" src=""
+    title="YouTube video player" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <div class="full" style="z-index: 9999;">
+
+    <div class="happy1" style="display: none;">
+      <img style="width: 70%; max-width: 450px;" src="assets/hpn.png" alt="">
+    </div>
+
+    <div class="presente1">
+      (clique no presente)
+      <img class="shake" style="max-width: 450px;" onclick="mudarPresente()" src="assets/p1.png" alt="">
+    </div>
+
+    <div class="presente2" style="display: none;">
+      <img id="pres" style="max-width: 450px;" onclick="mudarPresente()" src="assets/p2.png" alt="">
+      <img id="me" style="max-width: 450px;" src="assets/only.png" alt="">
+    </div>
+
+    <div class="happy2" style="display: none;">
+      <img style="width: 100%; max-width: 450px;" src="assets/img002.png" alt="">
+    </div>
+  </div>
+
+
+  <script>
+    function mudarPresente() {
+      $(".presente1").hide();
+      $(".presente2").show();
+      $("#me").addClass('grow');
+      $("#player").attr("src", "https://www.youtube.com/embed/7HUmu1uDRQo?si=s-jqEhAFnTevXbEw&amp;start=45&amp;autoplay=1&amp;volume=50")
+      confetti({
+        particleCount: 1000,
+        spread: 350,
+        origin: { y: 0.0 }
+      });
+
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      $(".happy1").show();
+      $(".happy2").show();
+
+      setTimeout(() => {
+        $("#pres").hide();
+      }, 800)
+
+    }
+
+  </script>
+</body>
+
+</html>
