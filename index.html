@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday</title>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -102,6 +104,20 @@
       justify-content: center;
     }
   </style>
+  <script>
+    var database = null;// Carrega o arquivo JSON com o firebaseConfig
+fetch('add.json')
+  .then(response => response.json())  // Converte a resposta em JSON
+  .then(config => {
+    // Inicializa o Firebase com o config do JSON
+    const app = firebase.initializeApp(config);
+    database = firebase.database();
+    
+    // Depois que Firebase estiver inicializado, você pode chamar suas funções
+    
+  })
+  .catch(error => console.error("Erro ao carregar o arquivo de configuração:", error));
+</script>
 </head>
 
 <body style="margin: unset;">
@@ -128,7 +144,28 @@
 
 
   <script>
+    // Função para atualizar o atributo "Visitas"
+function atualizarVisitas(database) {
+  const visitasRef = database.ref('visitas'); // Referência no banco de dados
+
+  // Obter o valor atual e incrementar
+  visitasRef.get().then((snapshot) => {
+    if (snapshot.exists()) {
+      let visitasAtual = snapshot.val();
+      visitasRef.set(visitasAtual + 1); // Atualiza com o valor incrementado
+      console.log(`Visitas atualizadas para: ${visitasAtual + 1}`);
+    } else {
+      visitasRef.set(1); // Caso seja a primeira vez, inicializa com 1
+      console.log('Visitas inicializadas para: 1');
+    }
+  }).catch((error) => {
+    console.error("Erro ao atualizar visitas: ", error);
+  });
+}
+
+    
     function mudarPresente() {
+      
       $(".presente1").hide();
       $(".presente2").show();
       $("#me").addClass('grow');
@@ -151,7 +188,7 @@
       setTimeout(() => {
         $("#pres").hide();
       }, 800)
-
+atualizarVisitas(database);
     }
 
   </script>
